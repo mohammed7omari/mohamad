@@ -1,0 +1,46 @@
+﻿@using WebMatrix.Data
+@{
+    var name = "";
+    var mobile = "";
+    var address = "";
+
+    if (IsPost)
+    {
+        name = Request.Form["Name"];
+        mobile = Request.Form["Mobile"];
+        address = Request.Form["Address"];
+
+        var db = Database.Open("students");
+        var inCommand = "INSERT INTO [dbo].[mohamad]([Name],[Mobile],[Address])VALUES(@0,@1,@2)";
+
+        db.Execute(inCommand, name, mobile, address);
+        Response.Redirect("~/WebPage1");
+    }
+}
+
+<html>
+<body>
+    <h1>Insert page </h1>
+    @Html.ValidationSummary()
+    <form method="post">
+        <fieldset>
+            <legend>Data Information</legend>
+            <p>
+                <label for="Name">Name</label>
+                <input type="text" name="Name" value="@Request.Form["name"]" />
+            </p>
+            <p>
+                <label for="Mobile">Mobile</label>
+                <input type="text" name="Mobile" value="@Request.Form["mobile"]" />
+            </p>
+            <p>
+                <label for="Address">Address</label>
+                <input type="text" name="Address" value="@Request.Form["address"]" />
+            </p>
+            <p><input type="submit" name="buttonSubmit" value="Add Data" /></p>
+
+
+        </fieldset>
+    </form>
+</body>
+</html>
